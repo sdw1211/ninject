@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script src="callback.js"></script>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+
+			window.onload = function() {
+				var text = '감사합니다.';
+				assert(useless(function() { return text;}) === text, "useless 함수가 동작합니다. " + text);
+				/*
+					자바스크립트 배열의 정렬은 기본적으로 유니코드 순서대로 정렬을 이용
+					그래서 숫자 sort의 경우는 원하는 결과를 받을 수 없다.
+				*/
+				var values = [213,16,2058,54,10,1965,57,9];
+				values.sort();
+				assert(values[0] === 9, "9일까요?" + values[0]);
+				assert(values[1] === 10, "10일까요?" + values[1]);
+
+				/*
+					숫자 정렬을 위해서는 아래와 같이 callback 함수를 만들어 줘야 한다.
+					오름 차순
+				*/
+				values.sort(function(value1, value2) {return value1 - value2;});
+
+				assert(values[0] === 9, "9일까요?" + values[0]);
+				assert(values[1] === 10, "10일까요?" + values[1]);
+				/*
+					숫자 정렬을 위해서는 아래와 같이 callback 함수를 만들어 줘야 한다.
+					내림 차순
+				*/
+				values.sort(function(value1, value2) {return value2 - value1;});
+
+				assert(values[0] === 2058, "2058일까요?" + values[0]);
+				assert(values[1] === 1965, "1965일까요?" + values[1]);
+
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+	</body>
+</html>
