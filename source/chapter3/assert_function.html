@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			function isNimble() {return true;}
+
+			assert(typeof window.isNimble === "function", "isNimble() 정의됨.");
+			assert(isNimble.name === "isNimble", "isNimble()에는 이름이 있음.");
+
+			var canFly = function() {return false; };
+
+			assert(typeof window.canFly == "function", "canFly() 정의됨.");
+			assert(window.canFly.name === "", "canFly()에는 이름이 없음");
+
+			window.isDeadly = function() {return true;};
+
+			assert(typeof window.isDeadly == "function", "isDeadly() 정의됨");
+
+			function outer() {
+				assert(typeof inner === "function", "inner 함수가 정의된 위치 앞쪽에서 inner()는 유효함.");
+				function inner() {}
+				assert(typeof inner === "function", "inner 함수가 정의된 위치 뒤쪽에서 inner()는 유효함.");
+				console.log(typeof window.inner);
+				assert(typeof window.inner === "undefined", "전역 유효범위에서는 inner() 는 없음.");
+			}
+
+			outer();
+
+			assert(window.inner === undefined, "전역 유효범위에서는 inner()는 없음");
+
+			window.wieldsSword = function swingsSword() {return true;};
+
+			assert(window.wieldsSword.name === "swingsSword", "wieldsSword 의 실제 이름은 swingsSword 이다.");
+		</script>
+	</body>
+</html>
