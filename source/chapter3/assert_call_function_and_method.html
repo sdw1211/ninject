@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			function creep() {return this;}
+
+			assert(creep() === window, "창문에서 살살 기어가고 있음.");
+			var sneak = creep;
+
+			assert(sneak() === window, "창문에서 살금살금 움직이고 있음.");
+			var ninja1 = { skulk:creep};
+
+			assert(ninja1.skulk() === ninja1, "첫 번째 닌자가 숨어있다.");
+
+			var ninja2 = { skulk:creep};
+
+			assert(ninja2.skulk() === ninja2, "두 번째 닌자가 숨어있다.");
+
+		</script>
+	</body>
+</html>

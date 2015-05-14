@@ -1,0 +1,32 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			function Ninja() {
+				this.skulk = function() {return this;}
+			}
+
+			var ninja1 = new Ninja();
+			var ninja2 = new Ninja();
+
+			assert(ninja1.skulk() === ninja1, "첫 번째 닌자가 숨어 있내요.");
+			assert(ninja2.skulk() === ninja2, "두 번째 닌자가 숨어 있내요.");
+
+		</script>
+	</body>
+</html>
