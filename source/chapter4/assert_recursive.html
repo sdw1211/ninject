@@ -1,0 +1,107 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			function chirp(n) {
+				return n > 1 ? chirp(n - 1) + "-chirp" : "chirp";
+			}
+
+			assert(chirp(3) === "chirp-chirp-chirp", "이름을 지난 힘수를 호출하는 것은 자연스럽다.");
+
+			var ninja = {
+				chirp : function(n) {
+					return n > 1 ? ninja.chirp(n - 1) + "-chirp" : "chirp";
+				}
+			}
+
+			assert(ninja.chirp(3) === "chirp-chirp-chirp", "객체 프로퍼티를 이용하는 것도 잘되네.");
+
+			var samurai = {chirp : ninja.chirp};
+
+			ninja = {};
+
+			try {
+				assert(samurai.chirp(3) === "chirp-chirp-chirp", "동작 안하겠네.");
+
+			} catch(ex) {
+				assert(false, "역시");
+			}
+
+			ninja = {
+				chirp : function(n) {
+					return n > 1 ? this.chirp(n - 1) + "-chirp" : "chirp";
+				}
+			}
+
+			samurai = {chirp : ninja.chirp};
+
+			ninja = {};
+
+			try {
+				assert(samurai.chirp(3) === "chirp-chirp-chirp", "이건 될껄");
+
+			} catch(ex) {
+				assert(false, "역시");
+			}
+
+			ninja = {
+				chirp : function signal(n) {
+					return n > 1 ? signal(n - 1) + "-chirp" : "chirp";
+				}
+			}
+
+			samurai = {chirp : ninja.chirp};
+
+			ninja = {};
+
+			try {
+				assert(samurai.chirp(3) === "chirp-chirp-chirp", "이건 될껄");
+
+			} catch(ex) {
+				assert(false, "역시");
+			}
+
+			var aaa = function myAaa() {
+				assert(aaa === myAaa, "이 함수는 동시에 두 가지 이름을 갖고 있다.");
+			}
+
+			aaa();
+
+			assert(typeof myAaa === "undefined", "myAaa은 외부에서는 사용할 수 없다.");
+
+			ninja = {
+				chirp : function signal(n) {
+					return n > 1 ? arguments.callee(n - 1) + "-chirp" : "chirp";
+				}
+			}
+
+			samurai = {chirp : ninja.chirp};
+
+			ninja = {};
+
+			try {
+				assert(samurai.chirp(3) === "chirp-chirp-chirp", "이건 될껄");
+
+			} catch(ex) {
+				assert(false, "역시");
+			}
+
+
+		</script>
+	</body>
+</html>

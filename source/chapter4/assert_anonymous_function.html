@@ -1,0 +1,36 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			window.onload = function() {assert(true, "power!")};
+
+			var ninja = {
+				shout : function() {
+					assert(true, "ninja");
+				}
+			};
+
+			ninja.shout();
+			assert(ninja.shout.name === "", "name : '" + ninja.shout.name + "' . 이것이 위에서 선언된 함수가 익명함수라는 말이다.");
+
+			setTimeout(function() {
+				assert(true, "forever!");
+			}, 500);
+		</script>
+	</body>
+</html>
