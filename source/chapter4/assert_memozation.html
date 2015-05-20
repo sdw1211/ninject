@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			function isPrime(value) {
+				if (!isPrime.answers) {
+					isPrime.answers = {};
+				}
+
+				if (isPrime.answers[value] != null) {
+					return isPrime.answers[value];
+				}
+
+				var prime = value != 1;
+				for (var i = 2; i < value; i++) {
+					if (value % i === 0) {
+						prime = false;
+						break;
+					}
+				}
+
+				return isPrime.answers[value] = prime;
+			}
+
+			assert(isPrime(5), "5는 소수");
+			assert(isPrime.answers[5], "캐시데이터 반환.");
+
+			function getElements(name) {
+				if (!getElements.cache) {
+					getElements.cache = {};
+
+					return getElements.cache[name] = getElements.cache[name] || document.getElementsByTagName(name);
+				}
+			}
+
+		</script>
+	</body>
+</html>

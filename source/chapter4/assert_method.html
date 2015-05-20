@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>Test Suite</title>
+		<input id="first" />
+		<input id="second" />
+		<script>
+			function assert(value, desc) {
+				var li = document.createElement("li");
+				li.className = value ? "pass" : "fail";
+				li.appendChild(document.createTextNode(desc));
+				document.getElementById("results").appendChild(li);
+			}
+		</script>
+		<style>
+			#results li.pass {color:green;}
+			#results li.fail {color:red;}
+		</style>
+	</head>
+	<body>
+		<ul id="results"></ul>
+		<script>
+			var elems = {
+				length : 0,
+				add : function(elem) {
+					Array.prototype.push.call(this, elem);
+				},
+				gather : function(id) {
+					this.add(document.getElementById(id));
+				}
+			};
+
+			elems.gather('first');
+			assert(elems.length === 1 && elems[0].nodeType, "수집된 엘리먼트가 저장되어 있는지 확인한다.");
+
+			elems.gather('second');
+			assert(elems.length === 2 && elems[1].nodeType, "추가된 엘리먼트가 저장되어 있는지 확인한다.");
+		</script>
+	</body>
+</html>
