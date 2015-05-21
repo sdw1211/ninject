@@ -50,8 +50,8 @@
 				assert(true, "인자가 3개인 함수");
 			});
 
-			addMethod(ojb, name, fn) {
-				var old = obj[name];
+			function addMethod(obj, name, fn) {
+				var old = obj[name] || function() {};
 
 				obj[name] = function() {
 					if (fn.length === arguments.length) {
@@ -62,7 +62,38 @@
 				}				
 			};
 
+			var ninjas2 = {values : ["Dean Edwards", "Sam Stephenson", "Alex Russell"]};
 
+			addMethod(ninjas2, "find", function() {
+				return this.values;
+			});
+
+			addMethod(ninjas2, "find", function(name) {
+				var ret = [];
+				for (var i=0; i < this.values. length; i++) {
+					if (this.values[i].indexOf(name) === 0) {
+						ret.push(this.values[i]);
+					}
+				}
+
+				return ret;
+			});
+
+			addMethod(ninjas2, "find", function(first, last) {
+				var ret = [];
+				for (var i=0; i < this.values. length; i++) {
+					if (this.values[i] === first + " " + last) {
+						ret.push(this.values[i]);
+					}
+				}
+
+				return ret;
+			});
+
+			assert(ninjas2.find().length === 3, "Found all ninjas");
+			assert(ninjas2.find("Sam").length === 1, "Found ninja by first name");
+			assert(ninjas2.find("Dean", "Edwards").length === 1, "Found ninja by first and last name");
+			assert(ninjas2.find("Alex", "Russell", "Jp") == null, "Found nothing");
 
 		</script>
 	</body>
